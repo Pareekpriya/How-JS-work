@@ -40,6 +40,7 @@ counter2.display();
 // Q2
 function creatBankAccount(){
     let balance=0;
+    let transactionHistory = [];
 
     return{
        deposite:function(amount){
@@ -48,6 +49,7 @@ function creatBankAccount(){
             return;
         }
         balance += amount;
+        transactionHistory.push({type:"Deposit",amount:amount,balance:balance});
         console.log(`Current balance:${balance}`);
        },
        
@@ -61,11 +63,21 @@ function creatBankAccount(){
             return;
         }
         balance-=amount;
+        transactionHistory.push({type:"Withdrawal",amount:amount,balance:balance});
         console.log(`Current balance: ${balance}`);
     },
 
     getBalance: function(){
         console.log(`Current balance: ${balance}`);
+    },
+
+    getTransactionHistory:function(){
+        console.log("Transaction History:");
+        transactionHistory.forEach((entry,index)=>{
+            console.log(
+                `${index +1}.${entry.type} of $${entry.amount}. Balance after transaction:$${entry.balance}.`
+            );
+        });
     },
 };
 }
@@ -76,13 +88,18 @@ account.deposite(500);
 account.withdraw(200);
 account.withdraw(400);
 account.getBalance();
+account.getTransactionHistory();
 
 
 const account1 = creatBankAccount();
 const account2 = creatBankAccount();
 
 account1.deposite(300);
+account2.deposite(300);
 account2.withdraw(200);
 
 account1.getBalance();
 account2.getBalance();
+
+account1.getTransactionHistory();
+account2.getTransactionHistory();
